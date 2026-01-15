@@ -1,3 +1,5 @@
+-- SISTEMA DE ESCOLA DE ENSINO MÉDIO
+
 CREATE DATABASE db_sistema_escola_ensino_medio;
 USE db_sistema_escola_ensino_medio;
 ALTER DATABASE db_sistema_escola_ensino_medio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

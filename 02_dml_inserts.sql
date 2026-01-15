@@ -1,3 +1,5 @@
+-- INSERÇÕES NO SISTEMA DE ESCOLA DE ENSINO MÉDIO
+
 INSERT INTO tbl_aluno (nome, tipo) 
 VALUES ('Eduardo Silva', 'M'), ('Yasmin Borges', 'F'), 
 ('Pedro Carlos', 'M'), ('Fernando Pimenta', 'M'),

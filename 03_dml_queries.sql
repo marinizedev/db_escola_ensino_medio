@@ -1,3 +1,5 @@
+-- CONSULTAS/RELATÓRIOS DO SISTEMA
+
 -- Supondo que você tenha N alunos, M turmas e M professores
 SET @aluno_id := 0;
  

@@ -64,4 +64,3 @@ Este projeto faz parte do meu processo de aprendizado e evolução na área de *
 Estudante de Análise e Desenvolvimento de Sistemas
 Foco em **Banco de Dados, SQL, Modelagem Dimensional, Business Intelligence e Back-end**.
 
----

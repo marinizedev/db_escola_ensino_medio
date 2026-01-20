@@ -26,6 +26,17 @@ O modelo foi construído respeitando **integridade referencial**, utilizando cha
 
 ---
 
+## Estrutura do Projeto
+
+- **scripts/**
+    - ddl_schema.sql -> Criação das tabelas e constraints
+    - dml_inserts.sql -> Povoamento das tabelas
+    - dml_queries.sql -> Consultas e relatórios SQL
+- **reports/**
+    - Relatórios visuais gerados a partir das consultas
+
+---
+
 ## Tecnologias utilizadas
 
 - MySQL
@@ -37,9 +48,9 @@ O modelo foi construído respeitando **integridade referencial**, utilizando cha
 
 ## Organização dos Scripts
 
-- 01_ddl_schema.sql
-- 02_dml_inserts.sql
-- 03_dml_queries.sql
+- ddl_schema.sql
+- dml_inserts.sql
+- dml_queries.sql
 
 - **DDL**: Criação das tabelas e relacionamentos
 - **DML**: Inserção de dados fictícios

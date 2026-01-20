@@ -1,0 +1,113 @@
+[1mdiff --git a/ddl_schema.sql b/ddl_schema.sql[m
+[1mnew file mode 100644[m
+[1mindex 0000000..bc7866a[m
+[1m--- /dev/null[m
+[1m+++ b/ddl_schema.sql[m
+[36m@@ -0,0 +1,106 @@[m
+[32m+[m[32m-- SISTEMA DE ESCOLA DE ENSINO MÉDIO[m
+[32m+[m
+[32m+[m[32mCREATE DATABASE db_sistema_escola_ensino_medio;[m
+[32m+[m[32mUSE db_sistema_escola_ensino_medio;[m
+[32m+[m[32mALTER DATABASE db_sistema_escola_ensino_medio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;[m
+[32m+[m
+[32m+[m[32mALTER TABLE tbl_aluno ADD tipo ENUM('F', 'M') NOT NULL;[m
+[32m+[m[32mCREATE TABLE tbl_aluno ([m
+[32m+[m[32m  id             INT PRIMARY KEY AUTO_INCREMENT,[m
+[32m+[m[32m  nome           VARCHAR(100) NOT NULL[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mALTER TABLE tbl_endereco ADD CONSTRAINT CK_Formato_CEP CHECK (cep REGEXP '\\d{5}-?\\d{3}$');[m
+[32m+[m[32mCREATE TABLE tbl_endereco ([m
+[32m+[m[32m  id             INT PRIMARY KEY AUTO_INCREMENT,[m
+[32m+[m[32m  logradouro     VARCHAR(65) NOT NULL,[m
+[32m+[m[32m  complemento    VARCHAR(100),[m
+[32m+[m[32m  numero         VARCHAR(45),[m
+[32m+[m[32m  cidade_uf      VARCHAR(65) NOT NULL,[m
+[32m+[m[32m  cep            VARCHAR(8) NOT NULL,[m
+[32m+[m[32m  id_aluno       INT NOT NULL,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT FK_Endereco_Aluno[m
+[32m+[m[32m  FOREIGN KEY (id_aluno)[m
+[32m+[m[32m  REFERENCES tbl_aluno(id)[m
+[32m+[m[32m  ON DELETE CASCADE[m
+[32m+[m[32m  ON UPDATE CASCADE[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mALTER TABLE tbl_telefone MODIFY numero VARCHAR(15);[m
+[32m+[m[32mCREATE TABLE tbl_telefone ([m
+[32m+[m[32m  id             INT PRIMARY KEY AUTO_INCREMENT,[m
+[32m+[m[32m  numero         INT NOT NULL,[m
+[32m+[m[32m  id_aluno       INT NOT NULL,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT FK_Telefone_Aluno[m
+[32m+[m[32m  FOREIGN KEY (id_aluno)[m
+[32m+[m[32m  REFERENCES tbl_aluno(id)[m
+[32m+[m[32m  ON DELETE CASCADE[m
+[32m+[m[32m  ON UPDATE CASCADE,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT CK_Telefone_FormatoNumero[m
+[32m+[m[32m  CHECK (numero REGEXP '^\\([0-9]{2}\\)[0-9]{5}-[0-9]{4}$')[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE tbl_professor ([m
+[32m+[m[32m  id             INT PRIMARY KEY AUTO_INCREMENT,[m
+[32m+[m[32m  nome           VARCHAR(100) NOT NULL,[m
+[32m+[m[32m  disciplina     VARCHAR(65) NOT NULL,[m
+[32m+[m[32m  cpf            VARCHAR(11) NOT NULL,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT UN_Professor_CPF[m
+[32m+[m[32m  UNIQUE (cpf),[m
+[32m+[m[32m  CONSTRAINT CK_FormatoCPF[m
+[32m+[m[32m  CHECK (cpf REGEXP '^[0-9]{11}$')[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE tbl_turma ([m
+[32m+[m[32m  id             INT PRIMARY KEY AUTO_INCREMENT,[m
+[32m+[m[32m  nome           VARCHAR(45) NOT NULL[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE tbl_matricula ([m
+[32m+[m[32m  id_professor   INT NOT NULL,[m
+[32m+[m[32m  id_turma       INT NOT NULL,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT PK_Matricula[m
+[32m+[m[32m  PRIMARY KEY (id_professor, id_turma),[m
+[32m+[m[32m  CONSTRAINT FK_Matricula_Professor[m
+[32m+[m[32m  FOREIGN KEY (id_professor)[m
+[32m+[m[32m  REFERENCES tbl_professor(id)[m
+[32m+[m[32m  ON DELETE RESTRICT[m
+[32m+[m[32m  ON UPDATE CASCADE,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT FK_Matricula_Turma[m
+[32m+[m[32m  FOREIGN KEY (id_turma)[m
+[32m+[m[32m  REFERENCES tbl_turma(id)[m
+[32m+[m[32m  ON DELETE RESTRICT[m
+[32m+[m[32m  ON UPDATE CASCADE[m
+[32m+[m[32m);[m
+[32m+[m
+[32m+[m[32mCREATE TABLE tbl_sala ([m
+[32m+[m[32m  id_aluno INT,[m
+[32m+[m[32m  id_turma INT,[m
+[32m+[m[32m  id_professor INT,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT PK_Sala[m
+[32m+[m[32m  PRIMARY KEY (id_aluno, id_turma, id_professor),[m
+[32m+[m[32m  CONSTRAINT FK_Sala_Aluno[m
+[32m+[m[32m  FOREIGN KEY (id_aluno)[m
+[32m+[m[32m  REFERENCES tbl_aluno(id)[m
+[32m+[m[32m  ON DELETE RESTRICT[m
+[32m+[m[32m  ON UPDATE CASCADE,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT FK_Sala_Turma[m
+[32m+[m[32m  FOREIGN KEY (id_turma)[m
+[32m+[m[32m  REFERENCES tbl_turma(id)[m
+[32m+[m[32m  ON DELETE RESTRICT[m
+[32m+[m[32m  ON UPDATE CASCADE,[m
+[32m+[m[41m  [m
+[32m+[m[32m  CONSTRAINT FK_Sala_Professor[m
+[32m+[m[32m  FOREIGN KEY (id_professor)[m
+[32m+[m[32m  REFERENCES tbl_professor(id)[m
+[32m+[m[32m  ON DELETE RESTRICT[m
+[32m+[m[32m  ON UPDATE CASCADE[m
+[32m+[m[32m);[m
+\ No newline at end of file[m
